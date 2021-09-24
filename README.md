@@ -17,13 +17,36 @@ schema-files - create-user-request.avsc
 
 ## Use kafka deployed in docker (cheatsheet)
 
-#### Where to get the `docker-compose.yml`
+#### Where to get the `docker-compose.yml`:
 ```
 $ curl --silent --output docker-compose.yml https://raw.githubusercontent.com/confluentinc/cp-all-in-one/6.2.1-post/cp-all-in-one/docker-compose.yml
 $ docker-compose up
 ```
 
-#### Create topic:
+#### Create a topic:
 ```bash
-$ docker-compose exec broker kafka-topics --create --zookeeper \ zookeeper:2181 --replication-factor 1 --partitions 1 --topic <topic_name>
+# assuming zookeeper is running in a default zookeeper container (described in the docker-compose.yml)
+$ docker-compose exec broker kafka-topics --create --zookeeper zookeeper:2181 --replication-factor 1 --partitions 1 --topic <topic_name>
+```
+
+#### List topics:
+```bash
+# assuming zookeeper is running in a default zookeeper container (described in the docker-compose.yml)
+$ docker-compose exec broker kafka-topics --list --zookeeper zookeeper:2181
+```
+
+#### Use console consumer/producer:
+```bash
+# assuming the containers have the default names
+$ docker exec -it broker sh
+$ kafka-console-producer ...
+# OR
+$ kafka-console-consumer ...
+```
+
+#### Connect to KSQL Server using KSQL CLI:
+```bash
+# assuming the containers have the default names
+$ docker exec -it ksqldb-cli sh
+$> ksql http://ksqldb-server:8088  # docker-compose exec ksqldb-cli http://ksqldb-server:8088 does not enter anywhere
 ```
