@@ -1,0 +1,9 @@
+{
+    "name": "file-sink-camp-users",
+    "config": {
+        "connector.class": "FileStreamSinkConnector",
+        "tasks.max": "1",
+        "file": "/tmp/connector-out/camp-users.txt",
+        "topics": "user-test-2"
+    }
+}

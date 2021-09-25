@@ -75,3 +75,14 @@ SHOW TABLES;
 ```sql
 DROP STREAM <stream-name>;
 ```
+
+
+## Work with connectors in containers (cheatsheet)
+### Create a connector:
+```bash
+$ curl -X POST -H "Content-Type: application/json" -d @connector-init/file-connector-sink.json localhost:8083/connectors
+```
+
+> For a file connector specified paths will be prepared in the container with the connector server
+
+Connectors [REST API](https://docs.confluent.io/platform/current/connect/references/restapi.html)
