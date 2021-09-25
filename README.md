@@ -76,6 +76,13 @@ SHOW TABLES;
 DROP STREAM <stream-name>;
 ```
 
+### Execute a script file:
+```bash
+# assuming the containers have the default names
+$ docker exec -it ksqldb-cli sh
+$> ksql -f <ksql_script_file>
+```
+
 
 ## Work with connectors in containers (cheatsheet)
 ### Create a connector:

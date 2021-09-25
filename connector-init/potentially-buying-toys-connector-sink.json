@@ -1,0 +1,9 @@
+{
+    "name": "camp-potentially-buying-toys-file-sink",
+    "config": {
+        "connector.class": "FileStreamSinkConnector",
+        "tasks.max": "1",
+        "file": "/tmp/connector-out/camp-potentially-buying-toys.txt",
+        "topics": "CAMP_ADULTS_INTERESTED_IN_TOYS"
+    }
+}

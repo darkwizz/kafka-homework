@@ -36,3 +36,17 @@ CREATE TABLE camp_count_by_gender AS
   WINDOW TUMBLING (SIZE 1 MINUTE, GRACE PERIOD 2 HOURS)
   GROUP BY gender
   EMIT CHANGES;
+
+
+CREATE STREAM camp_adults_interested_in_toys AS
+  SELECT
+    email,
+    first_name,
+    last_name,
+    age,
+    address,
+    gender,
+    job,
+  FROM camp_user_stream
+  WHERE has_children_under_16 = TRUE
+  EMIT CHANGES;
