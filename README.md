@@ -1,5 +1,8 @@
 # Kafka homework repository
 
+### Versions ready to check:
+* a commit tagged `v1-min-required-tasks`
+
 ## Setup the cluster
 ```bash
 $ docker-compose up -d
@@ -9,7 +12,6 @@ $> exit
 $ ./prepare-file-sinks.sh
 # run producers
 ```
-
 
 To run the producer:
 ```bash
@@ -25,6 +27,9 @@ bootstrap-servers - localhost:9092
 schema-registry - http://localhost:8081
 schema-files - create-user-request.avsc
 ```
+
+### Products diagram
+![Products-diagram](resources/ProductsKafkaDiagram.svg)
 
 ## Use kafka deployed in docker (cheatsheet)
 
