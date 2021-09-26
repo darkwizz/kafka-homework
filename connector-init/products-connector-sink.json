@@ -1,0 +1,9 @@
+{
+    "name": "file-sink-camp-products",
+    "config": {
+        "connector.class": "FileStreamSinkConnector",
+        "tasks.max": "1",
+        "file": "/tmp/connector-out/camp-products.txt",
+        "topics": "camp-products"
+    }
+}

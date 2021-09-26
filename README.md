@@ -9,7 +9,7 @@ $ docker-compose up -d
 $ docker exec -it ksqldb-cli sh
 $> ksql -f /tmp/ksql-init/bigDataCampStream.ksql http://ksqldb-server:8088
 $> exit
-$ ./prepare-file-sinks.sh
+$ ./prepare-file-sinks.sh  # will create connectors for User
 # run producers
 ```
 
@@ -32,6 +32,11 @@ Example of running producer for Products:
 ```bash
 $ cd producer
 $ python main.py --topic camp-products --schema-file create-product-request.avsc -g product
+```
+
+In case of running producers for Products, `prepare-file-sinks.sh` should be called with `--entity` argument:
+```bash
+$ ./prepare-file-sinks.sh --entity product
 ```
 
 
