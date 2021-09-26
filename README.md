@@ -16,7 +16,7 @@ $ ./prepare-file-sinks.sh
 To run the producer:
 ```bash
 $ cd producer  # otherwise schema/create-user-request.avsc will not be found
-$ python main.py [-h, --help] [--topic TOPIC] [--bootstrap-servers BOOTSTRAP_SERVERS] [--schema-registry SCHEMA_REGISTRY] [--schema-file SCHEMA_FILE]
+$ python main.py [-h, --help] [--topic TOPIC] [--bootstrap-servers BOOTSTRAP_SERVERS] [--schema-registry SCHEMA_REGISTRY] [--schema-file SCHEMA_FILE] [-g/--generator {user|product}]
 ```
 
 Default values of the parameters:
@@ -26,7 +26,14 @@ topic - user-test-2
 bootstrap-servers - localhost:9092
 schema-registry - http://localhost:8081
 schema-files - create-user-request.avsc
+generator - user
 ```
+Example of running producer for Products:
+```bash
+$ cd producer
+$ python main.py --topic camp-products --schema-file create-product-request.avsc -g product
+```
+
 
 ### Products diagram
 ![Products-diagram](resources/ProductsKafkaDiagram.svg)
