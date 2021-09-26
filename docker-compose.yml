@@ -72,6 +72,8 @@ services:
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
       CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
+    volumes:
+      - ./connector-out:/tmp/connector-out
 
   ksqldb-server:
     image: confluentinc/cp-ksqldb-server:6.2.1
@@ -103,8 +105,11 @@ services:
       - broker
       - connect
       - ksqldb-server
-    entrypoint: /bin/sh
+    entrypoint: ["/bin/sh"]
+    # command: "ksql -f /tmp/ksql-init/bigDataCampStream.ksql http://ksqldb-server:8088"
     tty: true
+    volumes:
+      - ./ksql-init:/tmp/ksql-init
 
   ksql-datagen:
     image: confluentinc/ksqldb-examples:6.2.1
@@ -165,5 +170,3 @@ services:
       CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS: 1
       CONFLUENT_METRICS_TOPIC_REPLICATION: 1
       PORT: 9021
-    volumes:
-      - ./connector-out:/tmp/connector-out

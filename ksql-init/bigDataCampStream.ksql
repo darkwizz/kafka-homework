@@ -1,4 +1,4 @@
-CREATE STREAM camp_user_stream (
+CREATE OR REPLACE STREAM camp_user_stream (
     email VARCHAR,
     first_name VARCHAR,
     last_name VARCHAR,
@@ -13,7 +13,7 @@ CREATE STREAM camp_user_stream (
 );
 
 
-CREATE STREAM camp_adult_users AS
+CREATE OR REPLACE STREAM camp_adult_users AS
   SELECT
     email,
     first_name,
@@ -28,7 +28,7 @@ CREATE STREAM camp_adult_users AS
   EMIT CHANGES;
 
 
-CREATE TABLE camp_count_by_gender AS
+CREATE OR REPLACE TABLE camp_count_by_gender AS
   SELECT
     gender,
     COUNT(email) AS count
@@ -38,7 +38,7 @@ CREATE TABLE camp_count_by_gender AS
   EMIT CHANGES;
 
 
-CREATE STREAM camp_adults_interested_in_toys AS
+CREATE OR REPLACE STREAM camp_adults_interested_in_toys AS
   SELECT
     email,
     first_name,
@@ -47,6 +47,7 @@ CREATE STREAM camp_adults_interested_in_toys AS
     address,
     gender,
     job,
+    has_children_under_16
   FROM camp_user_stream
   WHERE has_children_under_16 = TRUE
   EMIT CHANGES;

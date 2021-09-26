@@ -1,5 +1,16 @@
 # Kafka homework repository
 
+## Setup the cluster
+```bash
+$ docker-compose up -d
+$ docker exec -it ksqldb-cli sh
+$> ksql -f /tmp/ksql-init/bigDataCampStream.ksql http://ksqldb-server:8088
+$> exit
+$ ./prepare-file-sinks.sh
+# run producers
+```
+
+
 To run the producer:
 ```bash
 $ cd producer  # otherwise schema/create-user-request.avsc will not be found
@@ -74,6 +85,11 @@ SHOW TABLES;
 ### Drop a stream:
 ```sql
 DROP STREAM <stream-name>;
+```
+
+### Describe \[with details\] a stream
+```sql
+DESCRIBE <stream_name> [EXTENDED];
 ```
 
 ### Execute a script file:
