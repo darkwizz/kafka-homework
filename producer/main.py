@@ -1,8 +1,9 @@
 from argparse import ArgumentParser
 
 from entities.user import User
-from generator.user_generator import generate_users
+from generator.entity_generator import generate_users, generate_products
 from producer.user_producer import UserProducer
+from producer.product_producer import ProductProducer
 
 
 def parse_command_line_args():
@@ -14,11 +15,18 @@ def parse_command_line_args():
                         help='Schema Registry url')
     parser.add_argument('--schema-file', required=False, default='create-user-request.avsc',
                         help='File name of the Avro schema to use')
+    parser.add_argument('-g', '--generator', required=False, default='user', choices=('user', 'product'),
+                        help='Entity generator')
     return parser.parse_args()
 
 
 if __name__ == '__main__':
     args = parse_command_line_args()
-    user_producer = UserProducer(args)
-    for users in generate_users():
-        user_producer.send_records(users)
+    if args.generator == 'user':
+        producer = UserProducer(args)
+        generator = generate_users
+    elif args.generator == 'product':
+        producer = ProductProducer(args)
+        generator = generate_products
+    for entities in generator():
+        producer.send_records(entities)

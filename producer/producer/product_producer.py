@@ -1,7 +1,7 @@
 from producer.base_producer import BaseProducer
 
 
-class UserProducer(BaseProducer):
+class ProductProducer(BaseProducer):
     def __init__(self, config_args):
         super().__init__(config_args)
     
@@ -13,7 +13,7 @@ class UserProducer(BaseProducer):
         else:
             print(f'Successfully producing record value - {value} to topic - {self.topic}')
     
-    def send_records(self, users):
-        for user in users:
-            self.send_record(key=user.email, value=user.to_json())
+    def send_records(self, products):
+        for product in products:
+            self.send_record(key=product.barcode, value=product.to_json())
         self.producer.flush()
