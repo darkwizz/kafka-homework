@@ -72,6 +72,8 @@ services:
       CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://schema-registry:8081
       CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
       CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR
+    # command: |
+    #   sh -c 'yes $"2\ny\ny\ny" | confluent-hub install confluentinc/kafka-connect-elasticsearch:11.1.2'
     volumes:
       - ./connector-out:/tmp/connector-out
 
@@ -171,23 +173,23 @@ services:
       CONFLUENT_METRICS_TOPIC_REPLICATION: 1
       PORT: 9021
 
-  elastic:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
-    hostname: elastic
-    container_name: elastic
-    ports:
-      - "9200:9200"
-      - "9300:9300"
-    environment:
-      - discovery.type=single-node
+  # elastic:
+  #   image: docker.elastic.co/elasticsearch/elasticsearch:7.15.0
+  #   hostname: elastic
+  #   container_name: elastic
+  #   ports:
+  #     - "9200:9200"
+  #     - "9300:9300"
+  #   environment:
+  #     - discovery.type=single-node
   
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.15.0
-    hostname: kibana
-    container_name: kibana
-    depends_on:
-      - elastic
-    ports:
-      - "5601:5601"
-    environment:
-      - ELASTICSEARCH_HOSTS=http://elastic:9200
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:7.15.0
+  #   hostname: kibana
+  #   container_name: kibana
+  #   depends_on:
+  #     - elastic
+  #   ports:
+  #     - "5601:5601"
+  #   environment:
+  #     - ELASTICSEARCH_HOSTS=http://elastic:9200

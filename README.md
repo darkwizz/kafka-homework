@@ -13,6 +13,12 @@ $ ./prepare-file-sinks.sh  # will create connectors for User
 # run producers
 ```
 
+To start only specific containers:
+```bash
+$ docker-compose up -d elastic kibana
+```
+
+
 To run the producer:
 ```bash
 $ cd producer  # otherwise schema/create-user-request.avsc will not be found
@@ -37,6 +43,14 @@ $ python main.py --topic camp-products --schema-file create-product-request.avsc
 In case of running producers for Products, `prepare-file-sinks.sh` should be called with `--entity` argument:
 ```bash
 $ ./prepare-file-sinks.sh --entity product
+```
+
+#### To install elastic connector:
+```bash
+$ docker exec -it connector sh
+$> confluent-hub install confluentinc/kafka-connect-elasticsearch:11.1.2
+# here select 2), then "y", "y", "y"
+$> exit
 ```
 
 
