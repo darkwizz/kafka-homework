@@ -9,8 +9,13 @@ $ docker-compose up -d
 $ docker exec -it ksqldb-cli sh
 $> ksql -f /tmp/ksql-init/bigDataCampStream.ksql http://ksqldb-server:8088
 $> exit
-$ ./prepare-file-sinks.sh  # will create connectors for User
+$ ./prepare-file-sinks.sh  # will create **file** connectors for User
 # run producers
+```
+
+\[_For now like this, later will be moved to a script_\]Prepare a connector for elastic:
+```bash
+$ curl -X POST -H "Content-Type: application/json" -d @connector-init/elastic-connector-sink.json localhost:8083/connectors
 ```
 
 To start only specific containers:

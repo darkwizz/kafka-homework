@@ -1,0 +1,9 @@
+{
+    "name": "elastic-sink-camp-users",
+    "config": {
+        "connector.class": "io.confluent.connect.elasticsearch.ElasticsearchSinkConnector",
+        "tasks.max": "1",
+        "connection.url": "http://elastic:9200",
+        "topics": "user-test-2"
+    }
+}

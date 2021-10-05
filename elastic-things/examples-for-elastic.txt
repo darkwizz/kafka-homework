@@ -1,0 +1,220 @@
+PUT /product/_doc/1bar
+{
+  "barcode": "1bar",
+  "name": "Fresh golden apple",
+  "category": "Fruits and Vegetables",
+  "subcategory": "Fruits",
+  "description": "1 kg of fresh apple from the farm",
+  "price": 1.20,
+  "hasDiscount": true
+}
+
+PUT /product/_doc/2bar
+{
+  "barcode": "2bar",
+  "name": "Red apples",
+  "category": "Fruits and Vegetables",
+  "subcategory": "Fruits",
+  "description": "2 kg of fresh apple from the farm",
+  "price": 2.10,
+  "hasDiscount": true
+}
+
+PUT /product/_doc/3bar
+{
+  "barcode": "3bar",
+  "name": "Lemon",
+  "category": "Fruits and Vegetables",
+  "subcategory": "Fruits",
+  "description": "one lemon",
+  "price": 0.50,
+  "hasDiscount": false
+}
+
+PUT /product/_doc/4bar
+{
+  "barcode": "4bar",
+  "name": "Nice lime",
+  "category": "Fruits and Vegetables",
+  "subcategory": "Fruits",
+  "description": "1 kg - best lime",
+  "price": 3.20,
+  "hasDiscount": false
+}
+
+PUT /product/_doc/5bar
+{
+  "barcode": "5bar",
+  "name": "Fresh milk",
+  "category": "Dairy",
+  "subcategory": "Milk and cream",
+  "description": "1L of milk",
+  "price": 1.25,
+  "hasDiscount": true
+}
+
+PUT /product/_doc/6bar
+{
+  "barcode": "6bar",
+  "name": "sour cream",
+  "category": "Dairy",
+  "subcategory": "Milk and cream",
+  "description": "",
+  "price": 1.20,
+  "hasDiscount": false
+}
+
+
+
+
++++++++++++++
+
+
+
+PUT /customers
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "fuzzy_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "light_english_stemmer"
+          ]
+        }
+      }, 
+      "filter": {
+        "light_english_stemmer": {
+            "type": "stemmer",
+            "language": "light_english"
+        }
+      } 
+    }
+  },
+  "mappings" : {
+      "properties" : {
+        "address" : {
+          "type" : "text"
+        },
+        "age" : {
+          "type" : "integer"
+        },
+        "email" : {
+          "type" : "keyword"
+        },
+        "first_name" : {
+          "type" : "text",
+          "fields" : {
+            "keyword" : {
+              "type" : "keyword",
+              "ignore_above" : 256
+            }
+          }
+        },
+        "gender" : {
+          "type" : "keyword"
+        },
+        "has_children_under_sixteen" : {
+          "type" : "boolean"
+        },
+        "job" : {
+          "type" : "text",
+          "analyzer": "fuzzy_analyzer", 
+          "fields" : {
+            "keyword" : {
+              "type" : "keyword",
+              "ignore_above" : 256
+            }
+          }
+        },
+        "last_name" : {
+          "type" : "text",
+          "fields" : {
+            "keyword" : {
+              "type" : "keyword",
+              "ignore_above" : 256
+            }
+          }
+        }
+      }
+  }
+}
+
+
+
+
+*******************************************
+
+
+DELETE /product
+PUT /product
+{
+  "settings": {
+    "analysis": {
+      "analyzer": {
+        "fuzzy_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "light_english_stemmer"
+          ]
+        },
+        "synonym_analyzer": {
+          "type": "custom",
+          "tokenizer": "standard",
+          "filter": [
+            "lowercase",
+            "synonym"
+          ]
+        }
+      }, 
+      "filter": {
+        "light_english_stemmer": {
+            "type": "stemmer",
+            "language": "light_english"
+        },
+        "synonym": {
+          "type": "synonym",
+          "lanient": true,
+          "synonyms": [
+            "lime,lemon,citrus",
+            "milk,cream"
+          ]
+        }
+        
+      } 
+    }
+  },
+  "mappings": { 
+      "properties": { 
+          "barcode": { "type": "keyword" }, 
+          "name": { 
+            "type": "text",
+            "analyzer": "fuzzy_analyzer",
+            "norms": false
+          }, 
+          "category": { 
+            "type": "text",
+            "fields": {
+              "keyword": { 
+                "type": "keyword"
+              }
+            }
+          },
+          "subcategory": {
+            "type": "text",
+            "fields": {
+              "keyword": { 
+                "type": "keyword"
+              }
+            }
+          },
+          "description": { "type": "text" },
+          "price": {"type": "double"},
+          "hasDiscount": {"type": "boolean"}
+       } 
+  } 
+} 
